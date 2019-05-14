@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New episode of GoT</title>
+  <style>
+    * {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<img src="got.jpeg" alt="logo"/>
+<h1>New episode is ready!!!</h1>
+<script>
+  fetch('config.json')
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      window.appCofig = data;
+      showLink();
+    })
+    .catch((error) => {
+      alert('Can not load config file');
+      console.log(error);
+    });
+
+  function showLink() {
+    const node = document.getElementById('link');
+    node.setAttribute('href', window.appCofig.siteURL);
+    node.style.display = 'block'
+  }
+</script>
+<a id="link" style="display: none;">Download</a>
+</body>
+</html>
