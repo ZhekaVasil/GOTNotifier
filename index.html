@@ -11,7 +11,7 @@
 </head>
 <body>
 <img src="got.jpeg" alt="logo"/>
-<h1>New episode is ready!!!</h1>
+<h1 id="message" style="display: none;"></h1>
 <script>
   fetch('config.json')
     .then(response => {
@@ -19,6 +19,7 @@
     })
     .then(data => {
       window.appCofig = data;
+      showMessage();
       showLink();
     })
     .catch((error) => {
@@ -30,6 +31,43 @@
     const node = document.getElementById('link');
     node.setAttribute('href', window.appCofig.siteURL);
     node.style.display = 'block'
+  }
+
+  function showMessage() {
+    const message = getUrlParameter('episodeMessage').replace(/\s/g, '+');
+    const node = document.getElementById('message');
+    node.innerText = urlBase64Decode(message);
+    node.style.display = 'block'
+  }
+
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    const results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  }
+
+  function urlBase64Decode(str) {
+    console.log(str);
+    let output = str.replace(/-/g, '+').replace(/_/g, '/');
+    switch (output.length % 4) {
+      case 0:
+        break;
+      case 2:
+        output += '==';
+        break;
+      case 3:
+        output += '=';
+        break;
+      default:
+        throw 'Illegal base64url string!';
+    }
+    try{
+      let result = window.atob(output);
+      return decodeURIComponent(escape(result));
+    } catch (err) {
+      console.error(err);
+    }
   }
 </script>
 <a id="link" style="display: none;">Download</a>
