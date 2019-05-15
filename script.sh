@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
-appPort=`./jq.exe '.appPort' config.json`
-echo $appPort
-start "http://localhost:$appPort/?episodeMessage=$*"
+
+APP_PORT=$(grep APP_PORT .env | xargs)
+APP_PORT=${APP_PORT#*=}
+
+start "http://localhost:$APP_PORT/?episodeMessage=$*"

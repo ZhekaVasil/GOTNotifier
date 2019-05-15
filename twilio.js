@@ -1,5 +1,4 @@
 const twilio = require('twilio');
-const config = require('./config');
 
 class Twilio {
   constructor() {
@@ -14,7 +13,7 @@ class Twilio {
   sendMessage(message) {
     return this.client.messages.create({
       body: message,
-      to: config.targetPhoneNumber,  // Text this number
+      to: process.env.TARGET_PHONE_NUMBER,  // Text this number
       from: process.env.TWILLIO_PHONE_NUMBER // From a valid Twilio number
     })
       .then(() => console.log('SMS has been sent successfully'))

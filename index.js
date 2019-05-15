@@ -30,7 +30,7 @@ class LostFilm {
   }
 
   runServer() {
-    exec(`http-server -p ${config.appPort}`)
+    exec(`http-server -p ${process.env.APP_PORT}`)
   }
 
   checkNewEoisode() {
