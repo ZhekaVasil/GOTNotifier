@@ -33,7 +33,7 @@ class LostFilm {
     exec(`http-server -p ${process.env.APP_PORT}`)
   }
 
-  checkNewEoisode() {
+  checkNewEpisode() {
     console.log('Creating new request ', new Date());
     rp({
       uri: this.uri,
@@ -49,12 +49,12 @@ class LostFilm {
         }
       } else {
         console.log('There is no new episode yet');
-        setTimeout(() => {this.checkNewEoisode()}, this.checkInterval)
+        setTimeout(() => {this.checkNewEpisode()}, this.checkInterval)
       }
     })
       .catch((error) => {
         console.log(error);
-        setTimeout(() => {this.checkNewEoisode()}, this.checkInterval)
+        setTimeout(() => {this.checkNewEpisode()}, this.checkInterval)
       })
   }
 
@@ -80,4 +80,4 @@ class LostFilm {
 
 const lostFilm = new LostFilm();
 
-lostFilm.checkNewEoisode();
+lostFilm.checkNewEpisode();
