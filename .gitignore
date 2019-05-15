@@ -1,2 +1,5 @@
 node_modules
-.idea
+.idea/.blackbox/pubring.gpg~
+/.blackbox/pubring.kbx~
+/.blackbox/secring.gpg
+/.env
