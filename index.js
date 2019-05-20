@@ -6,7 +6,6 @@ const config = require('./config');
 const exec = require('child_process').exec;
 const Twilio = require('./twilio');
 const http = require('http');
-const fs = require('fs');
 
 class LostFilm {
   constructor() {
@@ -34,16 +33,8 @@ class LostFilm {
   runServer() {
     console.log('port: ', process.env.APP_PORT);
     http.createServer(function (req, res) {
-      fs.readFile('./index.html', (err, data) => {
-        if(err){
-          res.statusCode = 500;
-          res.end(`Error getting the file: ${err}.`);
-        } else {
-          // if the file is found, set Content-type and send data
-          res.setHeader('Content-type',  'text/html' );
-          res.end(data);
-        }
-      });
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.end('GoT Notifier');
     }).listen(process.env.APP_PORT, 'localhost');
     // exec(`http-server -p ${process.env.APP_PORT}`)
   }
