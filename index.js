@@ -5,6 +5,7 @@ const shell = require('shelljs');
 const config = require('./config');
 const exec = require('child_process').exec;
 const Twilio = require('./twilio');
+const http = require('http');
 
 class LostFilm {
   constructor() {
@@ -30,7 +31,11 @@ class LostFilm {
   }
 
   runServer() {
-    exec(`http-server -p ${process.env.APP_PORT}`)
+    http.createServer(function (req, res) {
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.end('GoT Notifier');
+    }).listen(process.env.APP_PORT, 'localhost');
+    // exec(`http-server -p ${process.env.APP_PORT}`)
   }
 
   checkNewEpisode() {
