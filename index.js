@@ -32,11 +32,11 @@ class LostFilm {
 
   runServer() {
     console.log('port: ', process.env.APP_PORT);
-    http.createServer(function (req, res) {
+    /*http.createServer(function (req, res) {
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.end('GoT Notifier');
-    }).listen(process.env.APP_PORT, 'localhost');
-    // exec(`http-server -p ${process.env.APP_PORT}`)
+    }).listen(process.env.APP_PORT, 'localhost');*/
+    exec(`http-server -p ${process.env.APP_PORT}`)
   }
 
   checkNewEpisode() {
