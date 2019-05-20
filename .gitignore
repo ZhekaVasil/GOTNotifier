@@ -4,3 +4,5 @@ node_modules
 /.blackbox/secring.gpg
 /.env
 .idea/
+.gitsecret/keys/random_seed
+!*.secret

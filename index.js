@@ -40,12 +40,14 @@ class LostFilm {
       transform: this.transform
     })
       .then(async ($) => {
-      if (this.isEpisodeAvailabel($)) {
-        this.showBrowserNotification();
+      if (this.isEpisodeAvailable($)) {
+        // this.showBrowserNotification();
         try {
           await this.sendSMSNotification();
-        } finally {
           process.exit(0);
+        } catch {
+          console.log('Can not send SMS, re-try...');
+          setTimeout(() => {this.checkNewEpisode()}, this.checkInterval)
         }
       } else {
         console.log('There is no new episode yet');
@@ -70,14 +72,16 @@ class LostFilm {
     this.episodeTitle = html.replace(/<.*?>|&nbsp;/gi, ' ').replace(/\s+/g, ' ').trim();
   }
 
-  isEpisodeAvailabel($) {
-    return !$('.movie-parts-list td')
-      .filter((i, el) => this.getEpisodeNumber($(el).text()) === this.episodeNumber && (this.setEpisodeTitle($(el).next().html()) || true))
-      .closest('tr')
-      .hasClass('not-available')
+  isEpisodeAvailable($) {
+    console.log(this.episodeNumber);
+    const tdElement = $('.movie-parts-list td')
+      .filter((i, el) => this.getEpisodeNumber($(el).text()) === this.episodeNumber && (this.setEpisodeTitle($(el).next().html()) || true));
+
+    return tdElement.length ? !tdElement.closest('tr').hasClass('not-available') : false
   }
 }
 
 const lostFilm = new LostFilm();
 
+lostFilm.runServer();
 lostFilm.checkNewEpisode();
