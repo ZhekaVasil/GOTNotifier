@@ -44,7 +44,8 @@ class LostFilm {
         // this.showBrowserNotification();
         try {
           await this.sendSMSNotification();
-          process.exit(0);
+          // process.exit(0);
+          shell.exec(`pm2 stop index`)
         } catch {
           console.log('Can not send SMS, re-try...');
           setTimeout(() => {this.checkNewEpisode()}, this.checkInterval)
